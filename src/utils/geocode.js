@@ -5,6 +5,8 @@ const geocode = (address, mapbox, callback) => {
     request({ url, json: true}, (error, { body } = {})=> {
         if(error)
             callback("Unable to Connect...")
+        else if(body.message)
+            callback(body.message)
         else if(body.features.length === 0)
             callback("Something went Wrong...")
         else{
