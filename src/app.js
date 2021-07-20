@@ -50,14 +50,20 @@ app.get('/weather', (req, res) => {
         res.send({
             error: "You must need to provide search"
         })
+    }else if(!req.query.weatherstack || !req.query.mapbox){
+        res.send({
+            error: 'Please provide Access Token'
+        })
     }else{
         const address = req.query.address
-        geocode(address, (error, {longitude, latitude, location} = {})=>{
+        const weatherstack = req.query.weatherstack
+        const mapbox = req.query.mapbox
+        geocode(address, mapbox, (error, {longitude, latitude, location} = {})=>{
             if(error)
               return res.send( {error} ) 
               
             //below code is example of callback chaining
-            forecast(longitude, latitude, (error, {weather_descriptions, temperature, feelslike} = {}) => {
+            forecast(longitude, latitude, weatherstack, (error, {weather_descriptions, temperature, feelslike} = {}) => {
                 if(error)
                     return res.send( {error} )
                 res.send({

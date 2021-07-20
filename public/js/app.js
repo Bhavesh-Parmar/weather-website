@@ -11,12 +11,14 @@ const messageFive = document.querySelector('#message-5')
 weatherForm.addEventListener('submit', (e) => {
     e.preventDefault() // prevent browser's default behaviour
     const location = search.value
+    const weatherstack = document.getElementById('weatherstack').value;
+    const mapbox = document.getElementById('mapbox').value;
     messageOne.textContent = 'Loading...'
     messageTwo.textContent = ''
     messageThree.textContent = ''; messageFoure.textContent = '';messageFive.textContent = ''
 
 
-    fetch('/weather?address="'+ location+'"').then( (res)=>{
+    fetch('/weather?address="'+ location+'"&weatherstack='+weatherstack+'&mapbox='+mapbox).then( (res)=>{
         res.json().then( (data) => {
             if (data.error)
                 messageOne.textContent = data.error  // console.log(data.error)
